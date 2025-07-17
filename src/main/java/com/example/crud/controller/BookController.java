@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -37,6 +38,19 @@ public class BookController {
     public String addBook(@ModelAttribute("newBook") BookDTO newBook) {
         bookService.addBook(newBook);
         return "add-book";
+    }
+
+    @GetMapping("/books")
+    public String listOfBooks(Model model) {
+        model.addAttribute("allBooks", bookService.getAllBooks());
+        return "all-books";
+    }
+
+    @GetMapping("/book/{id}")
+    public String book(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("book", bookService.getBookById(id));
+
+        return "book-details";
     }
 
 }
