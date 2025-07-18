@@ -25,16 +25,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public BookDTO getBookById(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFound("Book with id " + id + " not found"));
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setTitle(book.getTitle());
-        bookDTO.setDescription(book.getDescription());
-        bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setPrice(book.getPrice());
-
-        return bookDTO;
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id).orElseThrow(() -> new BookNotFound("Book with id " + id + " not found"));
     }
+
+
 
 
     public void addBook(BookDTO newBook) {
@@ -45,6 +40,19 @@ public class BookService {
         book.setPrice(newBook.getPrice());
 
         bookRepository.save(book);
+    }
+
+    public void updateBook(Long id, Book changedBook) {
+        Book book = getBookById(id);
+        book.setTitle(changedBook.getTitle());
+        book.setDescription(changedBook.getDescription());
+        book.setAuthor(changedBook.getAuthor());
+        book.setPrice(changedBook.getPrice());
+        bookRepository.save(book);
+    }
+
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
     }
 
 }

@@ -15,6 +15,14 @@
             <td>
                 <a th:href="@{'/book/' + ${book.id}}">Подробнее</a>
             </td>
+            <td>
+                <form th:action="@{/book/delete/{id}(id=${book.id})}" method="post">
+                    <input type="submit" value="Удалить">
+                </form>
+            </td>
+            <td>
+                <a th:href="@{'/book/update/' + ${book.id}}">Обновить</a>
+            </td>
         </tr>
     </table>
 </body>
